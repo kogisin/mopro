@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Community and Talks
 
-Join the Telegram group [here](https://t.me/zkmopro). This is the main place where coordination around development takes places.
+Join the Telegram group [here](https://t.me/zkmopro). This is the main place where coordination around development takes place.
 
 ## Talks
 
@@ -19,7 +19,7 @@ Join the Telegram group [here](https://t.me/zkmopro). This is the main place whe
 
 ## Contribute
 
-Contributions of all kinds welcome! Please see [open GH issues](https://github.com/zkmopro/mopro/issues). Also feel free to join the Telegram chat.
+Contributions of all kinds are welcome! Please see [open GH issues](https://github.com/zkmopro/mopro/issues). Also feel free to join the Telegram chat.
 
 You can also check out [good first issues](https://github.com/zkmopro/mopro/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 

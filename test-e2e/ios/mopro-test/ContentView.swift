@@ -76,12 +76,10 @@ extension ContentView {
         textViewText += "Generating Circom proof... "
         do {
             // Prepare inputs
-            var inputs = [String: [String]]()
             let a = 3
             let b = 5
             let c = a*b
-            inputs["a"] = [String(a)]
-            inputs["b"] = [String(b)]
+            let input_str: String = "{\"b\":[\"5\"],\"a\":[\"3\"]}"
             
             // Expected outputs
             let outputs: [String] = [String(c), String(a)]
@@ -90,7 +88,7 @@ extension ContentView {
             let start = CFAbsoluteTimeGetCurrent()
             
             // Generate Proof
-            let generateProofResult = try generateCircomProof(zkeyPath: zkeyPath, circuitInputs: inputs)
+            let generateProofResult = try generateCircomProof(zkeyPath: zkeyPath, circuitInputs: input_str, proofLib: ProofLib.arkworks)
             assert(!generateProofResult.proof.isEmpty, "Proof should not be empty")
             assert(Data(expectedOutput) == generateProofResult.inputs, "Circuit outputs mismatch the expected outputs")
             
@@ -98,6 +96,7 @@ extension ContentView {
             let timeTaken = end - start
             
             // Store the generated proof and public inputs for later verification
+
             generatedCircomProof = generateProofResult.proof
             circomPublicInputs = generateProofResult.inputs
             
@@ -118,15 +117,17 @@ extension ContentView {
         
         textViewText += "Verifying Circom proof... "
         do {
-            let start = CFAbsoluteTimeGetCurrent()
-            
-            let isValid = try verifyCircomProof(zkeyPath: zkeyPath, proof: proof, publicInput: inputs)
-            let end = CFAbsoluteTimeGetCurrent()
-            let timeTaken = end - start
-            
             // Convert proof to Ethereum compatible proof
             let ethereumProof = toEthereumProof(proof: proof)
             let ethereumInputs = toEthereumInputs(inputs: inputs)
+            let moproProof = fromEthereumProof(proof: ethereumProof)
+            let moproInputs = fromEthereumInputs(inputs: ethereumInputs)
+            let start = CFAbsoluteTimeGetCurrent()
+            
+            let isValid = try verifyCircomProof(zkeyPath: zkeyPath, proof: moproProof, publicInput: moproInputs, proofLib: ProofLib.arkworks)
+            let end = CFAbsoluteTimeGetCurrent()
+            let timeTaken = end - start
+            
             assert(ethereumProof.a.x.count > 0, "Proof should not be empty")
             assert(ethereumInputs.count > 0, "Inputs should not be empty")
             

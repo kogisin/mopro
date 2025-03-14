@@ -1,26 +1,27 @@
 use anyhow::Result;
+use ethereum::Proof;
 use num::BigUint;
 use std::thread::JoinHandle;
 
-#[cfg(feature = "arkworks")]
 pub mod ark_circom;
 #[cfg(feature = "arkworks")]
 pub mod arkworks;
 #[cfg(feature = "ethereum")]
 pub mod ethereum;
-#[cfg(feature = "arkworks")]
+#[cfg(feature = "rapidsnark")]
+pub mod rapidsnark;
 pub mod serialization;
 
+pub struct PublicInputs(pub Vec<BigUint>);
+
 pub struct CircomProof {
-    pub proof: Vec<u8>,
-    pub pub_inputs: Vec<u8>,
+    pub proof: Proof,
+    pub pub_inputs: PublicInputs,
 }
 
 #[derive(Debug, Clone, Copy)]
 pub enum ProofLib {
-    #[cfg(feature = "arkworks")]
     Arkworks,
-    #[cfg(feature = "rapidsnark")]
     RapidSnark,
 }
 
@@ -33,7 +34,9 @@ pub fn prove(
         #[cfg(feature = "arkworks")]
         ProofLib::Arkworks => arkworks::generate_circom_proof(zkey_path, witnesses),
         #[cfg(feature = "rapidsnark")]
-        ProofLib::RapidSnark => panic!("Not supported yet."),
+        ProofLib::RapidSnark => rapidsnark::generate_circom_proof(zkey_path, witnesses),
+        #[allow(unreachable_patterns)]
+        _ => panic!("Unsupported proof library"),
     }
 }
 
@@ -41,12 +44,14 @@ pub fn verify(
     lib: ProofLib,
     zkey_path: String,
     proof: Vec<u8>,
-    public_inputs: Vec<u8>,
+    public_inputs: PublicInputs,
 ) -> Result<bool> {
     match lib {
         #[cfg(feature = "arkworks")]
         ProofLib::Arkworks => arkworks::verify_circom_proof(zkey_path, proof, public_inputs),
         #[cfg(feature = "rapidsnark")]
-        ProofLib::RapidSnark => panic!("Not supported yet."),
+        ProofLib::RapidSnark => rapidsnark::verify_circom_proof(zkey_path, proof, public_inputs),
+        #[allow(unreachable_patterns)]
+        _ => panic!("Unsupported proof library"),
     }
 }

@@ -13,11 +13,8 @@ We _recommend_ developers benchmark their custom circuits before selecting tools
 
 :::warning
 
--   [witnesscalc](https://github.com/0xPolygonID/witnesscalc) hasn't been integrated in mopro. See [zkmopro/mopro#110](https://github.com/zkmopro/mopro/issues/110).
 -   [circom-witness-rs](https://github.com/philsippl/circom-witness-rs) is not fully compatible with circom circuits. See: [zkmopro/mopro#32](https://github.com/zkmopro/mopro/issues/32).
 -   [wasmer](https://github.com/arkworks-rs/circom-compat) doesn't work in iOS. See: [zkmopro/mopro#109](https://github.com/zkmopro/mopro/issues/109).
--   [Tachyon](https://github.com/kroma-network/tachyon) performs well in [macOS](#macos), but we haven't integrated it in
-    mobile. See [zkmopro/mopro#143](https://github.com/zkmopro/mopro/issues/143)
 :::
 
 ### iOS
@@ -314,9 +311,9 @@ Benchmarks on an Macbook Pro M1 Max (2021).
 ## Halo2
 
 In summary: <br/>
-The performance of the Mopro build is comparable to the native Halo2 build. <br/>
+The performance of the Mopro build is comparable to that of native Halo2 build. <br/>
 
-The bellow tests were run on a Macbook Pro M1 Pro (2021) as well as an iPhone 15 Pro (2023).
+The below tests were run on a Macbook Pro M1 Pro (2021) as well as an iPhone 15 Pro (2023).
 
 | [Keccak256](https://github.com/ElusAegis/halo2-keccak-stable.git) | Prove Time (s) | Verify Time (s) |
 | :---------------------------------------------------------------: | :------------: | :-------------: |

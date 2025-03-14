@@ -8,7 +8,7 @@ use anyhow::Result;
 
 use crate::constants::Adapter;
 
-// Storing user selections while interating with mopro cli
+// Storing user selections while iterating with mopro cli
 #[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub struct Config {
     pub(crate) target_adapters: HashSet<String>,
@@ -16,11 +16,11 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn adpater_eq(&self, adapter: Adapter) -> bool {
+    pub fn adapter_eq(&self, adapter: Adapter) -> bool {
         self.target_adapters == HashSet::from([String::from(adapter.as_str())])
     }
 
-    pub fn adpater_contains(&self, adapter: Adapter) -> bool {
+    pub fn adapter_contains(&self, adapter: Adapter) -> bool {
         self.target_adapters.contains(adapter.as_str())
     }
 }

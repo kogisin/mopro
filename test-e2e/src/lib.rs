@@ -1,4 +1,6 @@
-extern crate core;
+#![allow(unexpected_cfgs)]
+// Explicitly declare funtion to avoid Uniffi's limitation
+use circom_prover::witness::WitnessFn;
 
 // First, configure the Mopro FFI library
 mopro_ffi::app!();
@@ -14,7 +16,7 @@ mopro_ffi::set_circom_circuits! {
     ("keccak256_256_test_final.zkey", WitnessFn::RustWitness(keccak256256test_witness)),
 }
 
-// --- Halo2 Example of using a single proving and verifying circuit ---
+// --- Halo2 Example of using Plonk proving and verifying circuits ---
 
 // Module containing the Halo2 circuit logic (FibonacciMoproCircuit)
 
